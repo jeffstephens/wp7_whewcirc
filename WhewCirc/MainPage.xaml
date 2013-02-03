@@ -1,0 +1,75 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="WhewCirc.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:my="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
+    >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot x:Name="circpivot" Title="WHEWCIRC">
+            <!--Pivot item one-->
+            <controls:PivotItem Header="next circ">
+                <!--ContentPanel - place additional content here-->
+                <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                    <Grid.Resources>
+                        <DataTemplate x:Name="stopFullItemTemplate">
+                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" FontSize="34" Text="{Binding Name}" />
+                        </DataTemplate>
+                        <DataTemplate x:Name="stopListItem">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                        <Storyboard x:Name="tempStopTime_sb">
+                            <DoubleAnimation Storyboard.TargetName="tempStopTime"
+                                             Storyboard.TargetProperty="Opacity"
+                                             From="0" To="100" Duration="0:0:1" />
+                        </Storyboard>
+                        <Storyboard x:Name="nextStopTime_sb">
+                            <ColorAnimation Storyboard.TargetName="nextStopTime"
+                                             Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                             To="Gray" Duration="0:0:1" />
+                            <DoubleAnimation Storyboard.TargetName="nextStopTime"
+                                             Storyboard.TargetProperty="Margin.Top"
+                                             To="252" Duration="0:0:1" />
+                        </Storyboard>
+                    </Grid.Resources>
+
+                    <ProgressBar Height="4" Name="locateProgress" Visibility="Visible" IsIndeterminate="False" HorizontalAlignment="Center" Width="460" Margin="0,-158,0,689" />
+                    <toolkit:ListPicker ItemTemplate="{StaticResource stopListItem}" FullModeItemTemplate="{StaticResource stopFullItemTemplate}" ExpansionMode="FullScreenOnly" FullModeHeader="CHOOSE A CIRCULATOR STOP" x:Name="stopPicker" Header="stop location" Margin="12,0,12,0" SelectionChanged="ListPicker_SelectionChanged" />
+                    <TextBlock MouseLeftButtonUp="nextStopLabel_MouseLeftButtonUp" Height="30" HorizontalAlignment="Left" Foreground="Gray" Margin="12,137,0,0" Name="nextStopLabel" Text="next stop" VerticalAlignment="Top" />
+                    <TextBlock Height="97" Width="400" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,172,0,0" Name="tempStopTime" FontSize="72" Text="new thang" VerticalAlignment="Top" Opacity="0" />
+                    <TextBlock Height="97" Width="400" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,172,0,0" Name="nextStopTime" FontSize="72" Text="" VerticalAlignment="Top" />
+                    <TextBlock Height="97" Width="400" TextAlignment="Center" Foreground="LightGray" HorizontalAlignment="Center" Margin="0,252,0,0" Name="nextStopTime2" FontSize="72" Text="" VerticalAlignment="Top" />
+                    <TextBlock Height="97" Width="400" TextAlignment="Center" Foreground="Gray" HorizontalAlignment="Center" Margin="0,332,0,0" Name="nextStopTime3" FontSize="72" Text="" VerticalAlignment="Top" />
+                </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem Header="circ map">
+                <my:Map Height="530" HorizontalAlignment="Center" Name="map" VerticalAlignment="Top" Width="450" />
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="Settings" Text="Settings" Click="settingsHandler" />
+                <shell:ApplicationBarMenuItem x:Name="AboutItem" Text="About App" Click="aboutHandler"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
