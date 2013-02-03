@@ -74,7 +74,7 @@ namespace WhewCirc
             InitializeComponent();
 
             // Set maps API key
-            map.CredentialsProvider = new ApplicationIdCredentialsProvider("AnZIQpxMd4BEmvCR7_nBhqr2ZncAvMC3MAWyackuGfVag58r39tDhW_y23lumgQJ");
+            map.CredentialsProvider = new ApplicationIdCredentialsProvider("BING_MAPS_API_KEY_HERE");
 
             // Populate location list
             source = new List<Stops>();
